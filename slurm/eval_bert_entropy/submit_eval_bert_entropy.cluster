@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Job details
+# TIME=02:00:00  # HH:MM:SS (default: 04:00, max: 240:00)
+NUM_GPUS=0  # GPUs per node
+GPU_MODEL=gtx_1080_ti  # Choices: gtx_1080_ti,rtx_3090, nvidia_a100_80gb_pcie
+NUM_CPUS=4  # Number of cores (default: 1)
+CPU_RAM=1024  # RAM for each core (default: 1024)
+OUTFILE=submit_eval_bert_entropy_$1_$2_$3.out  # default: lsf.oJOBID
+script=submit_eval_bert_entropy.sh
+
+# Submit job
+# sbatch --time="02:00:00" -n $NUM_CPUS --gpus-per-node=gtx_1080_ti:1 -o $OUTFILE -e submit_pm_train.e --wrap="./$script"
+sbatch --time="24:00:00" -n $NUM_CPUS --mem-per-cpu=14G -o $OUTFILE -e submit_eval_bert_entropy_$1_$2.e --wrap="./$script $1 $2 $3"
